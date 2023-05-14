@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 		BrowserAnimationsModule,
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideFirestore(() => getFirestore()),
-		provideAnalytics(() => getAnalytics())
+		provideAnalytics(() => getAnalytics()),
+		provideAuth(() => getAuth())
 	],
 	providers: [],
 	bootstrap: [AppComponent]
