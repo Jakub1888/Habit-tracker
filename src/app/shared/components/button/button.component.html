@@ -1,0 +1,10 @@
+<button
+	mat-button
+	[ngClass]="matBtnType"
+	[disabled]="disabled"
+	[color]="btnColor"
+	class="{{ customClass }}"
+	(click)="onButtonClicked()"
+>
+	{{ label }}
+</button>
