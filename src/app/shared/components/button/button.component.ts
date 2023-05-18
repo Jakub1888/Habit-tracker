@@ -18,7 +18,7 @@ export class ButtonComponent {
 	@Input() label = '';
 	@Input() matBtnType!: matBtnType;
 	@Input() btnType: btnType = 'button';
-	@Input() btnColor: ThemePalette;
+	@Input() color: ThemePalette;
 	@Input() disabled = false;
 	@Input() customClass = '';
 	@Output() buttonClicked: EventEmitter<any> = new EventEmitter();

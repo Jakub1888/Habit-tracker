@@ -2,7 +2,7 @@
 	mat-button
 	[ngClass]="matBtnType"
 	[disabled]="disabled"
-	[color]="btnColor"
+	color="{{ color }}"
 	class="button {{ customClass }}"
 	(click)="onButtonClicked()"
 >
