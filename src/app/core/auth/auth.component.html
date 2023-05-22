@@ -1,7 +1,28 @@
-<app-button
-	[label]="'Submit'"
-	[color]="'warn'"
-	[btnType]="'submit'"
-	[matBtnType]="'mat-mdc-raised-button'"
-	(buttonClicked)="onAuthFormSubmit()"
-></app-button>
+<form [formGroup]="authForm">
+	<app-form-field
+		[control]="$any(authForm).controls['username']"
+		[label]="'Username'"
+		[placeholder]="'Enter a username'"
+		[isTextArea]="false"
+		[requiredErrorMessage]="'Username is required'"
+	></app-form-field>
+
+	<app-form-field
+		[control]="$any(authForm).controls['password']"
+		[label]="'Password'"
+		[placeholder]="'Enter a password'"
+		[isTextArea]="false"
+		[requiredErrorMessage]="'Password is required'"
+		[patternErrorMessage]="
+			'Password must contain at least one digit, one uppercase and one lowercase letter'
+		"
+	></app-form-field>
+
+	<app-button
+		[label]="'Submit'"
+		[color]="'warn'"
+		[btnType]="'submit'"
+		[matBtnType]="'mat-mdc-raised-button'"
+		(buttonClicked)="onAuthFormSubmit()"
+	></app-button>
+</form>
