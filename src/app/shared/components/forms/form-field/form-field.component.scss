@@ -1,0 +1,19 @@
+:host {
+	.form-input-wrapper {
+		width: 25em;
+		height: 7em;
+	}
+
+	.form-input {
+		width: 100%;
+		font-size: 1.2em;
+	}
+
+	::ng-deep .mdc-text-field {
+		background-color: #ffffff60;
+	}
+
+	.mat-mdc-form-field-error {
+		font-size: .7em;
+	}
+}

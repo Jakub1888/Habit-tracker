@@ -14,7 +14,7 @@ export class FormFieldComponent {
 	@Input() placeholder = '';
 	@Input() requiredErrorMessage = '';
 	@Input() patternErrorMessage = '';
-	@Input() className = '';
+	@Input() className = 'form-input';
 	@Input() icon!: string;
 
 	get isInvalid(): boolean {
