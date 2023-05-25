@@ -13,11 +13,15 @@ export class AuthComponent {
 		this.initForm();
 	}
 
+	onAuthFormSubmit(): void {
+		console.log(this.authForm.value);
+	}
+
 	private initForm(): void {
 		this.authForm = this.fb.group({
 			username: new FormControl('', {
 				nonNullable: true,
-				validators: [Validators.required]
+				validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
 			}),
 			password: new FormControl('', {
 				nonNullable: true,
@@ -27,9 +31,5 @@ export class AuthComponent {
 				]
 			})
 		});
-	}
-
-	onAuthFormSubmit(): void {
-		console.log('xd');
 	}
 }

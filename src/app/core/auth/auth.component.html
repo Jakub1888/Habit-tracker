@@ -1,4 +1,6 @@
-<form [formGroup]="authForm">
+<form [formGroup]="authForm" class="auth-form">
+	<h2 class="form-heading">Login Form</h2>
+
 	<app-form-field
 		[control]="$any(authForm).controls['username']"
 		[label]="'Username'"
@@ -12,16 +14,17 @@
 		[label]="'Password'"
 		[placeholder]="'Enter a password'"
 		[isTextArea]="false"
+		[type]="'password'"
 		[requiredErrorMessage]="'Password is required'"
-		[patternErrorMessage]="
-			'Password must contain at least one digit, one uppercase and one lowercase letter'
-		"
+		[patternErrorMessage]="'Password must contain at least one digit, one uppercase and one lowercase letter'"
 	></app-form-field>
 
 	<app-button
 		[label]="'Submit'"
 		[color]="'warn'"
 		[btnType]="'submit'"
+		[className]="'btn-submit'"
+		[disabled]="!authForm.valid"
 		[matBtnType]="'mat-mdc-raised-button'"
 		(buttonClicked)="onAuthFormSubmit()"
 	></app-button>

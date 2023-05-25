@@ -1,0 +1,29 @@
+:host {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	background-color: #e6e6fa;
+}
+
+.form-heading {
+	font-size: 2em;
+	font-weight: 600;
+	padding-bottom: .6em;
+}
+
+.auth-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 22em;
+	width: fit-content;
+	background: #87ceeb;
+	border-radius: 1em;
+	padding: 2em;
+	border: 3px solid black;
+}
+
+.btn-submit {
+	margin-top: auto;
+}
