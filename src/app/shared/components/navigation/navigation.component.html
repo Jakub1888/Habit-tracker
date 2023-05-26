@@ -1,0 +1,9 @@
+<nav id="nav">
+	<div class="nav-logo">logo here</div>
+
+	<div class="nav-items">
+		<ng-container *ngFor="let navItem of navItems">
+			<a [routerLink]="navItem.link" class="nav-item">{{ navItem.label }}</a>
+		</ng-container>
+	</div>
+</nav>

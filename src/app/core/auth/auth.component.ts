@@ -11,6 +11,7 @@ export class AuthComponent {
 
 	constructor(private fb: FormBuilder) {
 		this.initForm();
+		console.log('xd');
 	}
 
 	onAuthFormSubmit(): void {

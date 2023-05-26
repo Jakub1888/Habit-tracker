@@ -11,6 +11,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import { AuthModule } from './core/auth';
+import { NavigationModule } from './shared/components/navigation/navigation.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { AuthModule } from './core/auth';
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		AuthModule,
+		NavigationModule,
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideFirestore(() => getFirestore()),
 		provideAnalytics(() => getAnalytics()),
