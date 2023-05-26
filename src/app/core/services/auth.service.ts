@@ -1,43 +1,39 @@
 import { Injectable } from '@angular/core';
-import { User, UserCredential } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { EMPTY, Observable, catchError, from, of, switchMap, throwError } from 'rxjs';
-import firebase from 'firebase/compat/app';
+import { from, Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
+interface UserData {
+	email: string;
+	username: string;
+}
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
-	user$!: Observable<undefined>;
+	constructor(private fireAuth: AngularFireAuth, private fireStore: AngularFirestore) {}
 
-	constructor(private fireAuth: AngularFireAuth, private firestore: AngularFirestore) {}
-
-	registerWithEmail(email: string, password: string, username: string): Observable<any> {
+	registerWithEmailAndPassword(email: string, password: string, username: string): Observable<void> {
 		return from(this.fireAuth.createUserWithEmailAndPassword(email, password)).pipe(
-			catchError((error) => throwError(() => new Error(error))),
 			switchMap((userCredential) => {
 				const user = userCredential.user;
-				return from(
-					this.firestore.collection('users').doc(user?.uid).set({
-						email: user?.email,
-						username: username
-					})
-				);
-			})
+				const userRef: AngularFirestoreDocument<UserData> = this.fireStore.doc<UserData>(`users/${user?.uid}`);
+				const userData: UserData = {
+					email: user?.email as string,
+					username: username
+				};
+
+				return from(userRef.set(userData));
+			}),
+			catchError((error) => throwError(() => new Error(error)))
 		);
 	}
 
-	loginWithEmail(email: string, password: string): Observable<any> {
+	loginWithEmailAndPassword(email: string, password: string) {
 		return from(this.fireAuth.signInWithEmailAndPassword(email, password)).pipe(
 			catchError((error) => throwError(() => new Error(error)))
 		);
-	}
-
-	loginWithGoogle(): Observable<any> {
-		const provider = new firebase.auth.GoogleAuthProvider();
-		return from(this.fireAuth.signInWithPopup(provider)).pipe(
-			catchError((error) => throwError(() => new Error(error)))
-		)
 	}
 }

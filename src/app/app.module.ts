@@ -13,6 +13,8 @@ import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
 import { AuthModule } from './core/auth';
 import { NavigationModule } from './shared/components/navigation/navigation.module';
 
+import { StoreModule } from '@ngrx/store';
+
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
@@ -21,6 +23,12 @@ import { NavigationModule } from './shared/components/navigation/navigation.modu
 		BrowserAnimationsModule,
 		AuthModule,
 		NavigationModule,
+		StoreModule.forRoot({}),
+		// EffectsModule.forRoot([UserEffects]),
+		// StoreDevtoolsModule.instrument({
+		// 	maxAge: 25,
+		// 	logOnly: environment.production
+		// }),
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideFirestore(() => getFirestore()),
 		provideAnalytics(() => getAnalytics()),
