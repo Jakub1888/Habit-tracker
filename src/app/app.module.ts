@@ -10,10 +10,16 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics } from '@angular/fire/analytics';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AuthModule } from './core/auth';
 import { NavigationModule } from './shared/components/navigation/navigation.module';
 
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers, metaReducers } from './core/state';
+import { UserEffects } from './core/state/user/user.effects';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -23,18 +29,21 @@ import { StoreModule } from '@ngrx/store';
 		BrowserAnimationsModule,
 		AuthModule,
 		NavigationModule,
-		StoreModule.forRoot({}),
-		// EffectsModule.forRoot([UserEffects]),
-		// StoreDevtoolsModule.instrument({
-		// 	maxAge: 25,
-		// 	logOnly: environment.production
-		// }),
+		StoreModule.forRoot(reducers, {
+			metaReducers
+		}),
+		EffectsModule.forRoot([UserEffects]),
+		StoreDevtoolsModule.instrument({
+			maxAge: 25,
+			logOnly: environment.production
+		}),
+		ToastrModule.forRoot(),
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideFirestore(() => getFirestore()),
 		provideAnalytics(() => getAnalytics()),
 		provideAuth(() => getAuth())
 	],
-	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
+	providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }]
 })
 export class AppModule {}

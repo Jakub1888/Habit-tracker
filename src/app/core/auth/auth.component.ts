@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { registerWithEmailAndPassword } from '../state/user/user.actions';
 
 @Component({
 	selector: 'app-auth',
@@ -9,12 +11,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class AuthComponent {
 	authForm!: FormGroup;
 
-	constructor(private fb: FormBuilder) {
+	constructor(private fb: FormBuilder, private store: Store) {
 		this.initForm();
 	}
 
 	onAuthFormSubmit(): void {
 		console.log(this.authForm.value);
+		this.store.dispatch(registerWithEmailAndPassword(this.authForm.value));
 	}
 
 	private initForm(): void {
@@ -23,12 +26,13 @@ export class AuthComponent {
 				nonNullable: true,
 				validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
 			}),
+			email: new FormControl('', {
+				nonNullable: true,
+				validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
+			}),
 			password: new FormControl('', {
 				nonNullable: true,
-				validators: [
-					Validators.required,
-					Validators.pattern(/^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)$/)
-				]
+				validators: [Validators.required, Validators.pattern(/^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)$/)]
 			})
 		});
 	}

@@ -10,6 +10,14 @@
 	></app-form-field>
 
 	<app-form-field
+		[control]="$any(authForm).controls['email']"
+		[label]="'Email'"
+		[placeholder]="'Enter an email'"
+		[isTextArea]="false"
+		[requiredErrorMessage]="'Email is required'"
+	></app-form-field>
+
+	<app-form-field
 		[control]="$any(authForm).controls['password']"
 		[label]="'Password'"
 		[placeholder]="'Enter a password'"

@@ -19,7 +19,9 @@ export class AuthService {
 		return from(this.fireAuth.createUserWithEmailAndPassword(email, password)).pipe(
 			switchMap((userCredential) => {
 				const user = userCredential.user;
-				const userRef: AngularFirestoreDocument<UserData> = this.fireStore.doc<UserData>(`users/${user?.uid}`);
+				const userRef: AngularFirestoreDocument<UserData> = this.fireStore
+					.collection('users')
+					.doc<UserData>(user?.uid);
 				const userData: UserData = {
 					email: user?.email as string,
 					username: username
