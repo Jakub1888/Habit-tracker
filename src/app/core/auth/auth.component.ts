@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { registerWithEmailAndPassword } from '../state/user/actions/user.actions';
+import { Router } from '@angular/router';
+
+type AuthMode = 'register' | 'login';
 
 @Component({
 	selector: 'app-auth',
@@ -10,13 +13,22 @@ import { registerWithEmailAndPassword } from '../state/user/actions/user.actions
 })
 export class AuthComponent {
 	authForm!: FormGroup;
+	authMode!: AuthMode;
 
-	constructor(private fb: FormBuilder, private store: Store) {
+	constructor(private fb: FormBuilder, private store: Store, private router: Router) {
 		this.initForm();
+		this.initAuthMode();
+		if (this.authMode === 'login') {
+			this.authForm.removeControl('username');
+		}
 	}
 
 	onAuthFormSubmit(): void {
-		this.store.dispatch(registerWithEmailAndPassword(this.authForm.value));
+		if (this.authMode === 'login') {
+			// this.store.dispatch(loginWithEmailAndPassword(this.authForm.value));
+		} else {
+			this.store.dispatch(registerWithEmailAndPassword(this.authForm.value));
+		}
 	}
 
 	private initForm(): void {
@@ -34,5 +46,11 @@ export class AuthComponent {
 				validators: [Validators.required, Validators.pattern(/^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)$/)]
 			})
 		});
+	}
+
+	private initAuthMode(): void {
+		let currentRoute = this.router.url;
+		currentRoute = currentRoute.substring(1);
+		this.authMode = currentRoute as AuthMode;
 	}
 }

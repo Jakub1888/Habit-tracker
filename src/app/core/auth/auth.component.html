@@ -1,7 +1,16 @@
 <form [formGroup]="authForm" class="auth-form">
-	<h2 class="form-heading">Login Form</h2>
+	<h2 class="form-heading">{{ authMode | titlecase }} Form</h2>
+
+	<ng-container *ngIf="authMode === 'register'; else loginPrompt">
+		<p>Already have an account? <a routerLink="/login">Log in</a></p>
+	</ng-container>
+
+	<ng-template #loginPrompt>
+		<p>No account yet? <a routerLink="/register">Register</a></p>
+	</ng-template>
 
 	<app-form-field
+		*ngIf="authMode === 'register'"
 		[control]="$any(authForm).controls['username']"
 		[label]="'Username'"
 		[placeholder]="'Enter a username'"
@@ -28,7 +37,7 @@
 	></app-form-field>
 
 	<app-button
-		[label]="'Submit'"
+		[label]="authMode === 'register' ? 'Register' : 'Log in'"
 		[color]="'accent'"
 		[btnType]="'submit'"
 		[className]="'btn-submit'"
