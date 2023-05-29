@@ -1,15 +1,5 @@
 .App {
 	position: relative;
+	background: #EAEAEA;
 }
 
-app-navigation {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 999; /* Adjust the z-index value as needed */
-	height: 3em;
-}
-
-router-outlet {
-}

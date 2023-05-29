@@ -1,21 +1,9 @@
 :host {
-	width: 100%;
-	height: 100%;
-	overflow-y: scroll;
+	min-height: calc(100vh - 4.5em);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding-top: 3em;
-}
-
-form {
-	margin: 0 auto;
-}
-
-.form-heading {
-	font-size: 2em;
-	font-weight: 600;
-	padding-bottom: 0.6em;
+	padding-top: 4.5em;
 }
 
 .auth-form {
@@ -24,12 +12,18 @@ form {
 	align-items: center;
 	height: fit-content;
 	width: fit-content;
-	background: #87ceeb;
+	background: #F2F2F2;
 	border-radius: 1em;
 	padding: 2em;
 	border: 3px solid black;
-}
 
-.btn-submit {
-	margin-top: auto;
+	.form-heading {
+		font-size: 2em;
+		font-weight: 600;
+		padding-bottom: 0.6em;
+	}
+
+	.btn-submit {
+		margin-top: auto;
+	}
 }
