@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { registerWithEmailAndPassword } from '../state/user/user.actions';
+import { registerWithEmailAndPassword } from '../state/user/actions/user.actions';
 
 @Component({
 	selector: 'app-auth',
@@ -16,7 +16,6 @@ export class AuthComponent {
 	}
 
 	onAuthFormSubmit(): void {
-		console.log(this.authForm.value);
 		this.store.dispatch(registerWithEmailAndPassword(this.authForm.value));
 	}
 

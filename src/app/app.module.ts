@@ -18,7 +18,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './core/state';
-import { UserEffects } from './core/state/user/user.effects';
+import { UserEffects } from './core/state/user/effects/user.effects';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({

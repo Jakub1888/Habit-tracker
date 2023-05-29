@@ -1,6 +1,5 @@
-import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
-import { UserCredential } from '@angular/fire/auth';
-import { User } from './user.state';
+import { createAction, props } from '@ngrx/store';
+import { User } from '../state/user.state';
 
 export const registerWithEmailAndPassword = createAction(
 	'[Auth Form] Register with Email and Password',
