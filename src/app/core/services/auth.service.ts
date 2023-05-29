@@ -1,33 +1,38 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { from, Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { User, UserInfo } from 'firebase/auth';
+import { EMPTY, from, Observable, of, Subject, throwError, catchError, switchMap, tap, map } from 'rxjs';
 
-interface UserData {
+interface AppUser {
 	email: string;
-	username: string;
+	displayName: string;
+	metaData: User['metadata'] | undefined;
 }
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthService {
+	private clearFormSource = new Subject<boolean>();
+	clearForm$ = this.clearFormSource.asObservable();
+
 	constructor(private fireAuth: AngularFireAuth, private fireStore: AngularFirestore) {}
 
 	registerWithEmailAndPassword(email: string, password: string, username: string): Observable<void> {
 		return from(this.fireAuth.createUserWithEmailAndPassword(email, password)).pipe(
 			switchMap((userCredential) => {
 				const user = userCredential.user;
-				const userRef: AngularFirestoreDocument<UserData> = this.fireStore
+				const userRef: AngularFirestoreDocument<AppUser> = this.fireStore
 					.collection('users')
-					.doc<UserData>(user?.uid);
-				const userData: UserData = {
+					.doc<AppUser>(user?.uid);
+				const appUser: AppUser = {
 					email: user?.email as string,
-					username: username
+					displayName: username,
+					metaData: user?.metadata
 				};
 
-				return from(userRef.set(userData));
+				return from(userRef.set(appUser));
 			}),
 			catchError((error) => throwError(() => new Error(error)))
 		);
@@ -35,7 +40,12 @@ export class AuthService {
 
 	loginWithEmailAndPassword(email: string, password: string) {
 		return from(this.fireAuth.signInWithEmailAndPassword(email, password)).pipe(
+			tap((user) => console.log(user)),
 			catchError((error) => throwError(() => new Error(error)))
 		);
+	}
+
+	clearForm() {
+		this.clearFormSource.next(true);
 	}
 }

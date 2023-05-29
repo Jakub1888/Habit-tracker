@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 import * as UserActions from '../actions/user.actions';
 import { of } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { FirebaseError } from 'firebase/app';
+import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -28,24 +28,50 @@ export class UserEffects {
 		)
 	);
 
-	registerWithEmailAndPasswordFailure$ = createEffect(
+	loginWithEmailAndPassword$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(UserActions.loginWithEmailAndPassword),
+			switchMap(({ email, password }) =>
+				this.authService.loginWithEmailAndPassword(email, password).pipe(
+					map((user) => {
+						return UserActions.loginWithEmailAndPasswordSuccess({ user });
+					}),
+					catchError((error) =>
+						of(
+							UserActions.loginWithEmailAndPasswordFailure({
+								error: { message: error.message, code: error.code }
+							})
+						)
+					)
+				)
+			)
+		)
+	);
+
+	handleAuthActionSuccess$ = createEffect(
 		() =>
 			this.actions$.pipe(
-				ofType(UserActions.registerWithEmailAndPasswordFailure),
-				tap((error) => {
-					this.toastr.error(error.error.code, error.error.message);
+				ofType(
+					UserActions.registerWithEmailAndPasswordSuccess.type,
+					UserActions.loginWithEmailAndPasswordSuccess.type
+				),
+				tap((action: Action) => {
+					const type =
+						action.type === UserActions.loginWithEmailAndPasswordSuccess.type ? 'logged in' : 'registered';
+					const successMessage = `You have been ${type} successfully`;
+					this.toastr.success(successMessage);
+					this.router.navigateByUrl('/home');
 				})
 			),
 		{ dispatch: false }
 	);
 
-	registerWithEmailAndPasswordSuccess$ = createEffect(
+	handleAuthActionFailure$ = createEffect(
 		() =>
 			this.actions$.pipe(
-				ofType(UserActions.registerWithEmailAndPasswordSuccess),
-				tap(() => {
-					this.toastr.success('You have been successfully registered');
-					this.router.navigateByUrl('/home');
+				ofType(UserActions.registerWithEmailAndPasswordFailure, UserActions.loginWithEmailAndPasswordFailure),
+				tap((error) => {
+					this.toastr.error(error.error.code, error.error.message);
 				})
 			),
 		{ dispatch: false }

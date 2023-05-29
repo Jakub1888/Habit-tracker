@@ -4,20 +4,28 @@ import { createReducer, on } from '@ngrx/store';
 
 export const userReducer = createReducer(
 	UserState.initialUserState,
-	on(UserActions.registerWithEmailAndPassword, (state) => ({
+	on(UserActions.registerWithEmailAndPassword, UserActions.loginWithEmailAndPassword, (state) => ({
 		...state,
 		loading: true,
 		error: null
 	})),
-	on(UserActions.registerWithEmailAndPasswordSuccess, (state, { user }) => ({
-		...state,
-		user,
-		loading: false,
-		error: null
-	})),
-	on(UserActions.registerWithEmailAndPasswordFailure, (state, { error }) => ({
-		...state,
-		loading: false,
-		error
-	}))
+	on(
+		UserActions.registerWithEmailAndPasswordSuccess,
+		UserActions.loginWithEmailAndPasswordSuccess,
+		(state, { user }) => ({
+			...state,
+			user: user,
+			loading: false,
+			error: null
+		})
+	),
+	on(
+		UserActions.registerWithEmailAndPasswordFailure,
+		UserActions.loginWithEmailAndPasswordFailure,
+		(state, { error }) => ({
+			...state,
+			loading: false,
+			error
+		})
+	)
 );
