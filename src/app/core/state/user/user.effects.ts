@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseError } from 'firebase/app';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UserEffects {
@@ -44,10 +45,16 @@ export class UserEffects {
 				ofType(UserActions.registerWithEmailAndPasswordSuccess),
 				tap(() => {
 					this.toastr.success('You have been successfully registered');
+					this.router.navigateByUrl('/home');
 				})
 			),
 		{ dispatch: false }
 	);
 
-	constructor(private actions$: Actions, private authService: AuthService, private toastr: ToastrService) {}
+	constructor(
+		private actions$: Actions,
+		private authService: AuthService,
+		private toastr: ToastrService,
+		private router: Router
+	) {}
 }

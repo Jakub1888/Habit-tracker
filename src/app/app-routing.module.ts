@@ -5,7 +5,12 @@ import { HomeComponent } from './features/home/home.component';
 const routes: Routes = [
 	{
 		path: '',
-		component: HomeComponent
+		redirectTo: '/home',
+		pathMatch: 'full'
+	},
+	{
+		path: 'home',
+		loadChildren: () => import('./features/home/home.module').then((m) => m.HomeModule)
 	},
 	{
 		path: 'register',
