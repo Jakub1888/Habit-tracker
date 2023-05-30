@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { User } from 'firebase/auth';
 
 @Injectable()
 export class UserEffects {
@@ -33,8 +34,9 @@ export class UserEffects {
 			ofType(UserActions.loginWithEmailAndPassword),
 			switchMap(({ email, password }) =>
 				this.authService.loginWithEmailAndPassword(email, password).pipe(
-					map((user) => {
-						return UserActions.loginWithEmailAndPasswordSuccess({ user });
+					map((appUser) => {
+						let user = appUser as User;
+						return UserActions.loginWithEmailAndPasswordSuccess({ user })
 					}),
 					catchError((error) =>
 						of(

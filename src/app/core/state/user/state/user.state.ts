@@ -1,17 +1,15 @@
+import { User, UserInfo } from 'firebase/auth';
+
 export interface UserState {
 	user: User | null;
 	loading: boolean;
-	error: any | null;
-}
-
-export interface User {
-	uid: string;
-	email: string;
-	username: string;
+	isLoggedIn: boolean;
+	error: any;
 }
 
 export const initialUserState: UserState = {
 	user: null,
 	loading: false,
-	error: undefined
-}
+	isLoggedIn: false,
+	error: null
+};

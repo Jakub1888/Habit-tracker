@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../state/user.state';
+import { User } from 'firebase/auth';
 
 // Register
 export const registerWithEmailAndPassword = createAction(
@@ -9,7 +9,7 @@ export const registerWithEmailAndPassword = createAction(
 
 export const registerWithEmailAndPasswordSuccess = createAction(
 	'[Auth Form] Register with Email and Password Success',
-	props<{ user: any }>()
+	props<{ user: User | null }>()
 );
 
 export const registerWithEmailAndPasswordFailure = createAction(
@@ -25,7 +25,7 @@ export const loginWithEmailAndPassword = createAction(
 
 export const loginWithEmailAndPasswordSuccess = createAction(
 	'[Auth Form] Login with Email and Password Success',
-	props<{ user: any }>()
+	props<{ user: User }>()
 );
 
 export const loginWithEmailAndPasswordFailure = createAction(

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { User, UserInfo } from 'firebase/auth';
 import { EMPTY, from, Observable, of, Subject, throwError, catchError, switchMap, tap, map } from 'rxjs';
+import firebase from 'firebase/compat/app';
 
 interface AppUser {
 	email: string;
@@ -40,9 +41,13 @@ export class AuthService {
 
 	loginWithEmailAndPassword(email: string, password: string) {
 		return from(this.fireAuth.signInWithEmailAndPassword(email, password)).pipe(
-			tap((user) => console.log(user)),
+			map((userCredentials) => userCredentials.user),
 			catchError((error) => throwError(() => new Error(error)))
 		);
+	}
+
+	initializeFirebase() {
+		this.fireAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 	}
 
 	clearForm() {
