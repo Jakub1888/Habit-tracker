@@ -34,13 +34,28 @@ export class UserEffects {
 			ofType(UserActions.loginWithEmailAndPassword),
 			switchMap(({ email, password }) =>
 				this.authService.loginWithEmailAndPassword(email, password).pipe(
-					map((appUser) => {
-						let user = appUser as User;
-						return UserActions.loginWithEmailAndPasswordSuccess({ user })
-					}),
+					map((appUser) => UserActions.loginWithEmailAndPasswordSuccess()),
 					catchError((error) =>
 						of(
 							UserActions.loginWithEmailAndPasswordFailure({
+								error: { message: error.message, code: error.code }
+							})
+						)
+					)
+				)
+			)
+		)
+	);
+
+	logoutUser$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(UserActions.logoutUser),
+			switchMap(() =>
+				this.authService.logoutUser().pipe(
+					map(() => UserActions.logoutUserSuccess()),
+					catchError((error) =>
+						of(
+							UserActions.logoutUserFailure({
 								error: { message: error.message, code: error.code }
 							})
 						)
@@ -55,12 +70,12 @@ export class UserEffects {
 			this.actions$.pipe(
 				ofType(
 					UserActions.registerWithEmailAndPasswordSuccess.type,
-					UserActions.loginWithEmailAndPasswordSuccess.type
+					UserActions.loginWithEmailAndPasswordSuccess.type,
+					UserActions.logoutUserSuccess
 				),
 				tap((action: Action) => {
-					const type =
-						action.type === UserActions.loginWithEmailAndPasswordSuccess.type ? 'logged in' : 'registered';
-					const successMessage = `You have been ${type} successfully`;
+					let actionMessage = this.getSuccessActionMessage(action);
+					const successMessage = `You have been ${actionMessage} successfully`;
 					this.toastr.success(successMessage);
 					this.router.navigateByUrl('/home');
 				})
@@ -85,4 +100,22 @@ export class UserEffects {
 		private toastr: ToastrService,
 		private router: Router
 	) {}
+
+	private getSuccessActionMessage(action: Action): string {
+		let message;
+		switch (action.type) {
+			case UserActions.registerWithEmailAndPasswordSuccess.type:
+				message = 'registered';
+				break;
+			case UserActions.loginWithEmailAndPasswordSuccess.type:
+				message = 'logged in';
+				break;
+			case UserActions.logoutUserSuccess.type:
+				message = 'logged out';
+				break;
+			default:
+				message = '';
+		}
+		return message;
+	}
 }

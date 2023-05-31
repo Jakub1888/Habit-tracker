@@ -39,11 +39,15 @@ export class AuthService {
 		);
 	}
 
-	loginWithEmailAndPassword(email: string, password: string) {
+	loginWithEmailAndPassword(email: string, password: string): Observable<firebase.User | null> {
 		return from(this.fireAuth.signInWithEmailAndPassword(email, password)).pipe(
 			map((userCredentials) => userCredentials.user),
 			catchError((error) => throwError(() => new Error(error)))
 		);
+	}
+
+	logoutUser(): Observable<void> {
+		return from(this.fireAuth.signOut());
 	}
 
 	initializeFirebase() {

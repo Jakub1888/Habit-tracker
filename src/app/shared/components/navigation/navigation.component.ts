@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { State } from 'src/app/core/state';
+import { logoutUser } from 'src/app/core/state/user/actions/user.actions';
+import { selectIsAuthenticated } from 'src/app/core/state/user/selectors/user.selectors';
 
 export interface NavItem {
 	link: string;
@@ -10,9 +15,21 @@ export interface NavItem {
 	templateUrl: './navigation.component.html',
 	styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
+	isLoggedIn$!: Observable<boolean>;
+
 	navItems: NavItem[] = [
 		{ link: '/register', label: 'register' },
 		{ link: '/login', label: 'login' }
 	];
+
+	constructor(private store: Store<State>) {}
+
+	ngOnInit(): void {
+		this.isLoggedIn$ = this.store.pipe(select(selectIsAuthenticated));
+	}
+
+	onUserLogout(): void {
+		this.store.dispatch(logoutUser());
+	}
 }

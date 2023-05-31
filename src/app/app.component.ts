@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Store } from '@ngrx/store';
+import { setUser } from './core/state/user/actions/user.actions';
+import { User } from 'firebase/auth';
 
 @Component({
 	selector: 'app-root',
@@ -9,9 +12,14 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class AppComponent implements OnInit {
 	title = 'Habit Tracker';
 
-	constructor(private fireAuth: AngularFireAuth) {}
+	constructor(private fireAuth: AngularFireAuth, private store: Store) {}
 
 	ngOnInit(): void {
-		this.fireAuth.authState.subscribe((user) => console.log(user))
+		this.fireAuth.authState.subscribe((appUser) => {
+			if (appUser) {
+				let user = JSON.parse(JSON.stringify(appUser)) as User;
+				this.store.dispatch(setUser({ user }));
+			}
+		});
 	}
 }

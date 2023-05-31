@@ -25,10 +25,28 @@ export const loginWithEmailAndPassword = createAction(
 
 export const loginWithEmailAndPasswordSuccess = createAction(
 	'[Auth Form] Login with Email and Password Success',
-	props<{ user: User }>()
 );
 
 export const loginWithEmailAndPasswordFailure = createAction(
 	'[Auth Form] Login with Email and Password Failure',
 	props<{ error: any }>()
 );
+
+// Logout
+export const logoutUser = createAction(
+	'[Navbar] Logout User',
+);
+
+export const logoutUserSuccess = createAction(
+	'[Navbar] Logout User Success',
+);
+
+export const logoutUserFailure = createAction(
+	'[Navbar] Logout User Failure',
+	props<{ error: any }>()
+);
+
+export const setUser = createAction(
+	'[App Component] Set User',
+	props<{ user: User }>()
+)
