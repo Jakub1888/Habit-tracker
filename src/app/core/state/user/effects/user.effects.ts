@@ -7,7 +7,6 @@ import { AuthService } from '../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { User } from 'firebase/auth';
 
 @Injectable()
 export class UserEffects {

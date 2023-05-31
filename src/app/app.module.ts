@@ -38,7 +38,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 			maxAge: 25,
 			logOnly: environment.production
 		}),
-		ToastrModule.forRoot(),
+		ToastrModule.forRoot({
+			timeOut: 2500,
+			positionClass: 'toast-bottom-right',
+			preventDuplicates: true,
+		}),
 		MatProgressSpinnerModule,
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideFirestore(() => getFirestore()),

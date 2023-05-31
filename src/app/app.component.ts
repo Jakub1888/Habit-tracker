@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Store } from '@ngrx/store';
 import { setUser } from './core/state/user/actions/user.actions';
 import { User } from 'firebase/auth';
-import { Observable } from 'rxjs';
+import { Observable, delay, map, switchMap, takeUntil, timer } from 'rxjs';
 import { selectLoading } from './core/state/user/selectors/user.selectors';
 
 @Component({
