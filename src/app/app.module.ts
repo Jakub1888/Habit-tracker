@@ -20,6 +20,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './core/state';
 import { UserEffects } from './core/state/user/effects/user.effects';
 import { ToastrModule } from 'ngx-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -38,6 +39,7 @@ import { ToastrModule } from 'ngx-toastr';
 			logOnly: environment.production
 		}),
 		ToastrModule.forRoot(),
+		MatProgressSpinnerModule,
 		provideFirebaseApp(() => initializeApp(environment.firebase)),
 		provideFirestore(() => getFirestore()),
 		provideAnalytics(() => getAnalytics()),

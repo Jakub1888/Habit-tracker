@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Store } from '@ngrx/store';
 import { setUser } from './core/state/user/actions/user.actions';
 import { User } from 'firebase/auth';
+import { Observable } from 'rxjs';
+import { selectLoading } from './core/state/user/selectors/user.selectors';
 
 @Component({
 	selector: 'app-root',
@@ -11,6 +13,7 @@ import { User } from 'firebase/auth';
 })
 export class AppComponent implements OnInit {
 	title = 'Habit Tracker';
+	isLoading$!: Observable<boolean>;
 
 	constructor(private fireAuth: AngularFireAuth, private store: Store) {}
 
@@ -21,5 +24,7 @@ export class AppComponent implements OnInit {
 				this.store.dispatch(setUser({ user }));
 			}
 		});
+
+		this.isLoading$ = this.store.select(selectLoading);
 	}
 }
