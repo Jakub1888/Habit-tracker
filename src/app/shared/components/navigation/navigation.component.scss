@@ -16,5 +16,9 @@
 	.nav-item {
 		padding: 0 1.5em;
 		text-decoration: none;
+
+		.btn-logout {
+			background-color: #000;
+		}
 	}
 }

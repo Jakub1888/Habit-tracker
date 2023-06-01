@@ -1,7 +1,7 @@
 :host {
 	.form-input-wrapper {
 		width: 25em;
-		height: 7em;
+		height: 6em;
 	}
 
 	.form-input {
@@ -10,7 +10,7 @@
 	}
 
 	::ng-deep .mdc-text-field {
-		background-color: #6e474760;
+		background-color: #333333;
 	}
 
 	.mat-mdc-form-field-error {

@@ -5,6 +5,13 @@
 		<ng-container *ngFor="let navItem of navItems">
 			<a [routerLink]="navItem.link" class="nav-item" *ngIf="!(isLoggedIn$ | async)">{{ navItem.label }}</a>
 		</ng-container>
-		<a role="button" class="nav-item" *ngIf="isLoggedIn$ | async" (click)="onUserLogout()">Logout</a>
+
+		<app-button
+			class="nav-item btn-logout"
+			*ngIf="isLoggedIn$ | async"
+			[label]="'Log out'"
+			[matBtnType]="'mat-mdc-raised-button'"
+			(buttonClicked)="onUserLogout()"
+		></app-button>
 	</div>
 </nav>
