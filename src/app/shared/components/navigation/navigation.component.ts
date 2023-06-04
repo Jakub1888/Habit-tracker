@@ -18,7 +18,7 @@ export interface NavItem {
 export class NavigationComponent implements OnInit {
 	isLoggedIn$!: Observable<boolean>;
 
-	navItems: NavItem[] = [
+	navAuthLinks: NavItem[] = [
 		{ link: '/register', label: 'register' },
 		{ link: '/login', label: 'login' }
 	];

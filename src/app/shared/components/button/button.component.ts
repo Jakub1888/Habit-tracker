@@ -1,11 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 
-type matBtnType =
-	| 'mat-mdc-raised-button'
-	| 'mat-stroked-button'
-	| 'mat-flat-button'
-	| 'mat-icon-button';
+type matBtnType = 'mat-mdc-raised-button' | 'mat-stroked-button' | 'mat-flat-button' | 'mat-icon-button';
 
 type btnType = 'submit' | 'button';
 
@@ -16,6 +12,7 @@ type btnType = 'submit' | 'button';
 })
 export class ButtonComponent {
 	@Input() label = '';
+	@Input() icon!: string;
 	@Input() matBtnType!: matBtnType;
 	@Input() btnType: btnType = 'button';
 	@Input() color: ThemePalette;

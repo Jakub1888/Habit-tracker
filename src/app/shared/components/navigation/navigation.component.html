@@ -1,13 +1,15 @@
 <nav id="nav">
-	<div class="nav-logo">logo here</div>
+	<span class="nav-title">Habit Tracker App</span>
 
 	<div class="nav-items">
-		<ng-container *ngFor="let navItem of navItems">
-			<a [routerLink]="navItem.link" class="nav-item" *ngIf="!(isLoggedIn$ | async)">{{ navItem.label }}</a>
+		<ng-container *ngFor="let authLink of navAuthLinks">
+			<a [routerLink]="authLink.link" class="nav-auth_link" *ngIf="!(isLoggedIn$ | async)">{{
+				authLink.label
+			}}</a>
 		</ng-container>
 
 		<app-button
-			class="nav-item btn-logout"
+			class="btn-logout"
 			*ngIf="isLoggedIn$ | async"
 			[label]="'Log out'"
 			[matBtnType]="'mat-mdc-raised-button'"

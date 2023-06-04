@@ -6,5 +6,6 @@
 	class="button {{ customClass }}"
 	(click)="onButtonClicked()"
 >
-	{{ label }}
+	<span>{{ label }}</span>
+	<mat-icon *ngIf="icon">{{ icon }}</mat-icon>
 </button>
