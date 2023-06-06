@@ -33,7 +33,7 @@ export class UserEffects {
 			ofType(UserActions.loginWithEmailAndPassword),
 			switchMap(({ email, password }) =>
 				this.authService.loginWithEmailAndPassword(email, password).pipe(
-					map((appUser) => UserActions.loginWithEmailAndPasswordSuccess()),
+					map(() => UserActions.loginWithEmailAndPasswordSuccess()),
 					catchError((error) =>
 						of(
 							UserActions.loginWithEmailAndPasswordFailure({
