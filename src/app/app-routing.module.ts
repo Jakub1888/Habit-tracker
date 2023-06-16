@@ -13,6 +13,10 @@ const routes: Routes = [
 		loadChildren: () => import('./features/home/home.module').then((m) => m.HomeModule)
 	},
 	{
+		path: 'habits',
+		loadChildren: () => import('./features/habits/habits.module').then((m) => m.HabitsModule)
+	},
+	{
 		path: 'register',
 		loadChildren: () => import('./core/auth/auth.module').then((m) => m.AuthModule)
 	},

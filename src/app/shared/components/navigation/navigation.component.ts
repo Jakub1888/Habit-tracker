@@ -5,7 +5,7 @@ import { State } from 'src/app/core/state';
 import { logoutUser } from 'src/app/core/state/user/actions/user.actions';
 import { selectIsAuthenticated } from 'src/app/core/state/user/selectors/user.selectors';
 
-export interface NavItem {
+export interface NavLink {
 	link: string;
 	label: string;
 }
@@ -18,10 +18,12 @@ export interface NavItem {
 export class NavigationComponent implements OnInit {
 	isLoggedIn$!: Observable<boolean>;
 
-	navAuthLinks: NavItem[] = [
+	navAuthLinks: NavLink[] = [
 		{ link: '/register', label: 'register' },
 		{ link: '/login', label: 'login' }
 	];
+
+	navLinks: NavLink[] = [{ link: '/habits', label: 'habits' }];
 
 	constructor(private store: Store<State>) {}
 

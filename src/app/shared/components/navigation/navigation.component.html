@@ -2,6 +2,14 @@
 	<span class="nav-title">Habit Tracker App</span>
 
 	<div class="nav-items">
+		<div class="section-links">
+			<ng-container *ngFor="let navLink of navLinks">
+				<a [routerLink]="navLink.link" class="nav-section_link" *ngIf="isLoggedIn$ | async">{{
+					navLink.label
+				}}</a>
+			</ng-container>
+		</div>
+
 		<ng-container *ngFor="let authLink of navAuthLinks">
 			<a [routerLink]="authLink.link" class="nav-auth_link" *ngIf="!(isLoggedIn$ | async)">{{
 				authLink.label
